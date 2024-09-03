@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "knowlegequran",
+    "slug": "knowlegequran",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/favicon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.anonymous.knowlegequranapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose.",
+          "cameraPermission": "The app accesses your camera to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose."
+        }
+      ]
+      
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
