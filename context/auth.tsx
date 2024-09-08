@@ -1,15 +1,9 @@
 import { useRouter, useSegments } from 'expo-router';
 import axios from 'axios';
 import * as React from 'react';
+import { User } from '@/constants/types';
 
 const AuthContext = React.createContext<any>(null);
-
-interface User {
-    name: string;
-    role: string;
-    user_code: string;
-    user_id: string;
-  }
 
   
 export function useAuth() {

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { AppContextProps, Student, Teacher, Class } from './types';
+import { AppContextProps, Student, Teacher, Class } from '../constants/types';
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 

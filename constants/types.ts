@@ -22,7 +22,7 @@ export interface Student {
     paid_fees_month: string | null;
     timezone: string;
   }
-  
+
   export interface Teacher {
     teacher_code: string;
     name: string;
@@ -65,3 +65,10 @@ export interface Student {
     fetchData: () => void;
   }
   
+
+  export interface User {
+    name: string;
+    role: string;
+    user_code: string;
+    user_id: string;
+  }

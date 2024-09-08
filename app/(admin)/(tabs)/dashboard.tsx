@@ -1,24 +1,22 @@
-import { Button, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { Text, View, TouchableOpacity, FlatList} from 'react-native';
 import { useAuth } from '@/context/auth';
-import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { useApp } from '@/context/app';
+
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 import axios from 'axios';
+
+import NotificationBanner, { NotificationBannerRef } from '@/components/NotificationBanner';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import AppButton from '@/components/Button';
 import AddStudentModal from '@/components/AddStudentModal';
-import { useApp } from '@/context/app';
-import NotificationBanner from '@/components/NotificationBanner';
+import { Student } from '@/constants/types';
+import AddTeacherModal from '@/components/AddTeacherModal';
 
-interface Student {
-  student_code: string;
-  student_name: string;
-  class_start: string;
-  class_end: string;
-  enroll_date: string;
-}
 
 interface PageData {
   student_count: number;
@@ -33,12 +31,10 @@ interface ListItemProps {
   onPress?: () => void;
 }
 
-
 export default function Dashboard() {
 
-  const {signOut, user} = useAuth();
+  const {user} = useAuth();
   const {students, fetchData} = useApp();
-  const router = useRouter();
 
   const [expandedId, setExpandedId] = useState<string | null>(null); // for student list expanded track
 
@@ -48,18 +44,11 @@ export default function Dashboard() {
   const [addTeacherModal, setAddTeacherModal] = useState(false);
 
   // notification
-  const [showBanner, setShowBanner] = useState(false);
-  const [message, setMessage] = useState('');
-  const [type, setType] = useState<'success' | 'error'>('success');
 
-  const handleShowBanner = (message: string, type: 'success' | 'error') => {
-    setMessage(message);
-    setType(type);
-    setShowBanner(true);
-  };
+  const notificationBannerRef = useRef<NotificationBannerRef>(null);
 
-  const handleCloseBanner = () => {
-    setShowBanner(false);
+  const showBanner = (message: string, type: 'success' | 'error') => {
+    notificationBannerRef.current?.handleShowBanner(message, type);
   };
 
 
@@ -143,36 +132,58 @@ export default function Dashboard() {
     });
 
       console.log(response.data)
+
       if (response.data.status === "success") {
-        handleShowBanner('Student Added Successfully!', 'success');
+        showBanner('Student Added Successfully!', 'success');
         fetchData();
         console.log("here")
       }
-      else
+      else if (response.data.status === "error")
       {
-        handleShowBanner(`${response.data.message} : ${response.data.errors[0]}`, 'error');
+        showBanner(`${response.data.message} `, 'error');
       }
     } catch (error) {
-      handleShowBanner(`Error Occured: ${error}`, 'error');
+      showBanner(`Error Occured: ${error}`, 'error');
+      console.log("err : ", error)
     }
   };
 
 
+  const handleAddTeacherPress =  async (teacherData: FormData) => {
+    try {
+      const response = await axios.post('http://lms.knowledgequran.info/companyadmin/addteacher/add_app', teacherData, {
+        headers: {
+            'Content-Type': 'multipart/form-data', 
+        },
+    });
+
+      console.log(response.data)
+
+      if (response.data.status === "success") {
+        showBanner('Student Added Successfully!', 'success');
+        fetchData();
+        console.log("here")
+      }
+      else if (response.data.status === "error")
+      {
+        showBanner(`${response.data.message} `, 'error');
+      }
+    } catch (error) {
+      showBanner(`Error Occured: ${error}`, 'error');
+      console.log("err : ", error)
+    }
+  };
+
   return (
-    <View className='flex flex-1 items-center'>
+    <View className='flex flex-1 items-center bg-white'>
       <View className='h-[25%] w-[85%] flex flex-col justify-between '>
-        {showBanner && (
-          <NotificationBanner
-            message={message}
-            type={type}
-            onClose={handleCloseBanner}
-          />
-        )}
+        <NotificationBanner ref={notificationBannerRef} message="" type="success" />
 
         <View className='h-[30%] flex-row rounded-lg border-2 border-primary-75 bg-primary-20'>
 
-          <View className='h-full flex mx-2 justify-center bg-transparent'>
-            <AntDesign name="minussquareo" size={34} color="green" style={{backgroundColor:'transparent'}} />
+          <View className='h-full flex flex-row mx-2 justify-center items-center bg-transparent'>
+            <MaterialIcons name="supervisor-account" size={34} color="green" style={{backgroundColor:'transparent'}} />
+            <Text className='text-medium font-semibold text-green-950 px-2'>Student Count :</Text>
           </View>        
 
           <View className='h-full flex mx-2 justify-center bg-transparent'>
@@ -183,11 +194,14 @@ export default function Dashboard() {
 
         <View className='h-[30%] flex-row rounded-lg border-2 border-primary-75 bg-primary-20'>
         
-          <View className='h-full flex mx-2 justify-center bg-transparent'>
-            <AntDesign name="minussquareo" size={34} color="green" style={{backgroundColor:'transparent'}} />
+          <View className='h-full flex flex-row items-center mx-2 justify-center bg-transparent'>
+            <FontAwesome5 name="chalkboard-teacher" size={24} color="green" style={{backgroundColor:'transparent'}} />
+            <Text className='text-medium font-semibold text-green-950 px-2'>Teacher Count :</Text>
+
           </View>        
 
           <View className='h-full flex mx-2 justify-center bg-transparent'>
+            
             <Text className='text-xl font-bold text-green-900'>{pageData?.teacher_count}</Text>
           </View>
 
@@ -195,8 +209,9 @@ export default function Dashboard() {
 
         <View className='h-[30%] flex-row rounded-lg border-2 border-primary-75 bg-primary-20'>
         
-          <View className='h-full flex mx-2 justify-center bg-transparent'>
-            <AntDesign name="minussquareo" size={34} color="green" style={{backgroundColor:'transparent'}} />
+          <View className='h-full flex flex-row items-center mx-2 justify-center bg-transparent'>
+            <MaterialCommunityIcons name="google-classroom" size={30} color="green" style={{backgroundColor:'transparent'}} />
+            <Text className='text-medium font-semibold text-green-950 px-2'>Total Classes :</Text>
           </View>        
 
           <View className='h-full flex mx-2 justify-center bg-transparent'>
@@ -214,6 +229,13 @@ export default function Dashboard() {
         onClose = {() => setAddStudentModal(false)}
         onSubmit= {handleAddStudentPress}
         title='Add Student'
+      />
+
+      <AddTeacherModal 
+        visible = {addTeacherModal}
+        onClose = {() => setAddTeacherModal(false)}
+        onSubmit= {handleAddTeacherPress}
+        title='Add Teacher'
       />
 
       <View className='w-[85%] flex flex-row items-center justify-between'>

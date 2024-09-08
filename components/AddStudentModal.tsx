@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -9,18 +9,45 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import AppButton from "@/components/Button";
-import { Picker } from "@react-native-picker/picker";
 import { useApp } from "@/context/app";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
+import NotificationBanner, { NotificationBannerRef } from "./NotificationBanner";
 
 interface AddStudentModalProps {
   visible: boolean;
   onClose: () => void;
-  onSubmit: (studentData: FormData) => void;
+  onSubmit: (studentData: FormData) => Promise<void>;
   title: string;
+}
+
+interface ImageData {
+  uri: string;
+  name: string;
+  type: string;
+  blob: Blob;
+}
+
+interface StudentFormData {
+  student_code: string;
+  student_name: string;
+  gender: string;
+  father_name: string;
+  father_number: string;
+  email: string;
+  password: string;
+  dob: string;
+  language: string;
+  site: string;
+  status: string;
+  timezone: string;
+  cst: string;
+  cet: string;
+  enroll_date: string;
+  country: string;
+  teacher_code: string;
 }
 
 const AddStudentModal: React.FC<AddStudentModalProps> = ({
@@ -458,11 +485,19 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
   const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
 
+  const [image, setImage] = useState<null | { uri: string }>(null);
 
-  const [formData, setFormData] = useState({
+    // notification
+  const notificationBannerRef = useRef<NotificationBannerRef>(null)
+  const showBanner = (message: string, type: "success"|"error") => {
+    notificationBannerRef.current?.handleShowBanner(message, type);
+  }
+
+
+  const [formData, setFormData] = useState<StudentFormData>({
     student_code: "",
     student_name: "",
-    gender: "",
+    gender: "male",
     father_name: "",
     father_number: "",
     email: "",
@@ -477,7 +512,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
     status: "1",
     teacher_code: "",
     timezone: "Africa/Abidjan",
-    image: null as string | null,
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -505,9 +539,9 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
       aspect: [1, 1],
       quality: 1,
     });
-
+  
     if (!result.canceled) {
-      setFormData({ ...formData, image: result.assets[0].uri });
+      setImage(result.assets[0]);
     }
   };
 
@@ -535,18 +569,54 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
 
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const requiredFields = [
+      "student_code",
+      "student_name",
+      "gender",
+      "father_name",
+      "father_number",
+      "email",
+      "password",
+      "dob",
+      "cst",
+      "cet",
+      "enroll_date",
+      "country",
+      "teacher_code"
+    ];
+  
+    // Check for missing fields
+    const missingFields = requiredFields.filter(
+      (field) => !formData[field as keyof typeof formData]
+    );
+  
+    if (missingFields.length > 0) {
+      showBanner(`Missing fields: ${missingFields.join(", ")}`, 'error');
+      return;
+    }
+  
     const form = new FormData();
-
+  
     Object.keys(formData).forEach((key) => {
       form.append(key, formData[key as keyof typeof formData] || "");
     });
-    if (formData.image) {
-      form.append("image", formData.image);
+
+    if (image) {
+      const fileName = image.uri.split("/").pop();
+      const fileType = fileName?.split(".").pop();
+
+      form.append("user_image", {
+        uri: image.uri,
+        name: fileName,
+        type: `image/${fileType}`,
+      } as any);
     }
+
     onSubmit(form);
     onClose();
   };
+  
   
   return (
     <Modal
@@ -555,6 +625,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
       visible={visible}
       onRequestClose={onClose}
     >
+      <NotificationBanner ref={notificationBannerRef} message="" type="success"/>
       <View className="flex-1 justify-center items-center py-20 px-6 backdrop-blur-lg bg-primary-20/70 ">
         <View className="bg-white w-full rounded-lg border-2 border-primary justify-center">
           <Text className="text-heading font-bold mt-4 self-center">
@@ -668,7 +739,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
                 className="h-12 bg-primary-10 mb-4 px-2 rounded-xl text-btn_title border-primary-25 focus:border-2 focus:shadow-md"
                 value={formData.password}
                 onChangeText={(text) => handleInputChange("password", text)}
-                secureTextEntry
               />
             </View>
 
@@ -860,9 +930,9 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({
                 <Text className="text-center text-gray-600">Pick an Image</Text>
               </TouchableOpacity>
 
-              {formData.image && (
+              {image && (
                 <Image
-                  source={{ uri: formData.image }}
+                  source={{ uri: image.uri }}
                   className="w-28 h-28 rounded-lg border mb-4"
                 />
               )}
