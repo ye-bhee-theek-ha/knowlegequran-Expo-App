@@ -19,7 +19,7 @@ module.exports = {
           'hero': '68px',
           'heading': '44px',
           'subheading': '36px',
-          "cardtitle": "40px",
+          "h1": "28px",
           "heading": "24px",
           'text': '20px',
           "btn_title": "18px",

@@ -1,22 +1,35 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Pressable, TouchableOpacity, View, Text } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { useAuth } from '@/context/auth';
+import { green } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
+function FontAwesomeIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
+function MaterialIconsIcon(props: {
+  name: React.ComponentProps<typeof MaterialIcons>['name'];
+  color: string;
+}) {
+  return <MaterialIcons size={28} style={{ marginBottom: -3 }} {...props} />;
+}
+
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const {signOut} = useAuth();
 
   return (
     <Tabs
@@ -26,34 +39,40 @@ export default function TabLayout() {
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
       }}>
+
       <Tabs.Screen
-        name="index"
+        name="dashboard"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <MaterialIconsIcon name="space-dashboard" color={color} />,
+          
+        }}
+      />
+
+      <Tabs.Screen
+        name="marks"
+        options={{
+          title: 'Marks',
+          tabBarIcon: ({ color }) => <MaterialIconsIcon name="class" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <MaterialIconsIcon name="settings" color={color} />,
+          // headerBackgroundContainerStyle: {borderBottomColor: "green", borderBottomWidth: 2},
           headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={signOut} className='mr-4 px-2 py-1 bg-primary rounded-lg'>
+                <Text className='text-btn_title font-semibold text-white'>Logout</Text>
+              </TouchableOpacity>
+          </View>
           ),
         }}
       />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab tew',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
+
     </Tabs>
   );
 }

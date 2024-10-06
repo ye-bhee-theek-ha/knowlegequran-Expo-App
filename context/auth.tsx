@@ -24,18 +24,21 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
 
       if (user.role === "companyadmin" )
       {
+        console.log("replacing route to admin dashboard")
         router.replace("/(admin)/(tabs)/dashboard");
       }
       else if (user.role === "student" )
       {
-        router.replace("/(student)/");
+        console.log("replacing route to student dashboard")
+        router.replace("/(student)/(tabs)/dashboard");
       }
       else if (user.role === "teacher" )
       {
-        router.replace("/(teacher)/");
+        console.log("replacing route to teacher dashboard")
+        router.replace("/(teacher)/(tabs)/dashboard");
       }
     }
-  }, [user, rootSegment]);
+  }, [user]);
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -71,6 +74,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   };
 
   const signOut = () => {
+    router.replace("/(auth)/login");
     setUser(null);
   };
 

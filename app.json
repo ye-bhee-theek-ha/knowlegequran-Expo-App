@@ -4,7 +4,7 @@
     "slug": "knowlegequran",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "splash": {
@@ -20,7 +20,10 @@
         "foregroundImage": "./assets/images/favicon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.knowlegequranapp"
+      "package": "com.anonymous.knowlegequranapp",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -30,16 +33,35 @@
     "plugins": [
       "expo-router",
       [
+        "@config-plugins/react-native-webrtc",
+        {
+          "cameraPermission": "Allow webrtc to access your camera for video confrencing",
+          "microphonePermission": "Allow webrtc to access your microphone for confrencing"
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose.",
           "cameraPermission": "The app accesses your camera to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
       ]
-      
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ef8fad24-f2ea-44a8-84e9-5165db5831b7"
+      }
     }
   }
 }

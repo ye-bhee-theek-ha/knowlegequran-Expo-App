@@ -27,14 +27,16 @@ export default function TabOneScreen() {
     //   setError('');
     // }
 
-    setLoading(true);
+    // setLoading(true);
     try {
-      await signIn("admin@kqc.com", "123");
+
       // await signIn(email, password);
+      await signIn("testteacher@kqc.com", "1");
+
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
       setError(errorMessage);
-      setEmail("");
+      // setEmail("");
       setPassword("")
     } finally {
       setLoading(false);
