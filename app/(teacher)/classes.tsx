@@ -165,6 +165,7 @@ export default function Classes() {
         onPress={() => {
           router.push({
             pathname: "/(teacher)/meeting",
+            params: { TeacherID, StudentID, StudentName },
           });
         }}
       />

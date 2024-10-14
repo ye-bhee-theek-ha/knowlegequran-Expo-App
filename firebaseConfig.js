@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 // Optionally import the services that you want to use
 // import {...} from "firebase/auth";
@@ -7,18 +8,19 @@ import { initializeApp } from 'firebase/app';
 // import {...} from "firebase/functions";
 // import {...} from "firebase/storage";
 
-// Initialize Firebase
 const firebaseConfig = {
-  apiKey: 'api-key',
-  authDomain: 'project-id.firebaseapp.com',
-  databaseURL: 'https://project-id.firebaseio.com',
-  projectId: 'project-id',
-  storageBucket: 'project-id.appspot.com',
-  messagingSenderId: 'sender-id',
-  appId: 'app-id',
-  measurementId: 'G-measurement-id',
+ 
+  databaseURL: 'https://knowlege-quran-4ccb0.firebaseio.com',
+  apiKey: "AIzaSyCbcyreKBvJ1mKxrjCjORshTLXEnpf8Eyc",
+  authDomain: "knowlege-quran-4ccb0.firebaseapp.com",
+  projectId: "knowlege-quran-4ccb0",
+  storageBucket: "knowlege-quran-4ccb0.appspot.com",
+  messagingSenderId: "999993120612",
+  appId: "1:999993120612:web:84a1612713efc9c52c0c71"
 };
 
 const app = initializeApp(firebaseConfig);
-// For more information on how to access Firebase in your project,
-// see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
+
+const db = getFirestore(app);
+
+export { app, db };
