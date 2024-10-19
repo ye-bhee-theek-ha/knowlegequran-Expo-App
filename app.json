@@ -4,9 +4,10 @@
     "slug": "knowlegequran",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/app.png",
+    "icon": "./assets/images/logo_new.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
+    "platforms": ["ios", "android"],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -17,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/favicon.png",
+        "foregroundImage": "./assets/images/logo_new.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.knowlegequranapp",
@@ -28,7 +29,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/logo_new.png"
     },
     "plugins": [
       "expo-router",

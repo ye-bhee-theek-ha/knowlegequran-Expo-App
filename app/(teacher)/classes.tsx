@@ -163,10 +163,10 @@ export default function Classes() {
         class_Name='mt-3 bg-primary mx-4'
         textClassName='font-bold text-text'
         onPress={() => {
-          router.push({
-            pathname: "/(teacher)/meeting",
-            params: { TeacherID, StudentID, StudentName },
-          });
+          // router.push({
+          //   pathname: "/(teacher)/meeting",
+          //   params: { TeacherID, StudentID, StudentName },
+          // });
         }}
       />
       
