@@ -63,7 +63,7 @@ const AddClassGroupModal: React.FC<AddClassModalProps> = ({
     notificationBannerRef.current?.handleShowBanner(message, type);
   }
 
-  const {teachers, students} = useApp();
+  const {teachers, students, classes} = useApp();
 
   const [formData, setFormData] = useState<ClassFormData>({
     title: "",
@@ -150,6 +150,8 @@ const AddClassGroupModal: React.FC<AddClassModalProps> = ({
       showBanner(`Missing fields: ${missingFields.join(", ")}`, 'error')
       return;
     }
+
+    
   
     const form = new FormData();
 
