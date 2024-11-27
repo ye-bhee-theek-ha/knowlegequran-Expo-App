@@ -26,7 +26,19 @@
       },
       "package": "com.anonymous.knowlegequranapp",
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "FOREGROUND_SERVICE_MEDIA_PROJECTION",
+        "ACCESS_NETWORK_STATE",
+        "BLUETOOTH",
+        "CAMERA",
+        "INTERNET",
+        "MANAGE_OWN_CALLS",
+        "MODIFY_AUDIO_SETTINGS",
+        "RECORD_AUDIO",
+        "WAKE_LOCK",
+        "ACCESS_WIFI_STATE"
       ]
     },
     "web": {

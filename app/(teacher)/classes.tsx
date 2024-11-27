@@ -137,14 +137,15 @@ export default function Classes() {
 
   useEffect(() => {
     GetInfo();
-    console.log(pageData)
   }, [])
 
 
   const ListItem: React.FC<{ classes: ClassData; isExpanded?: boolean; onPress?: () => void;}> = ({ classes }) => {
     
     const statusColor = classes.status === "2" ? 'bg-green-200' : classes.status === "1" ? 'bg-yellow-200' : 'bg-red-200';
-
+    const meet_link = classes.title + classes.teacher_code + classes.student_code;
+    const Title = classes.title
+        
     return (
     <View className='my-2 border-primary bg-primary-20 py-3 px-4 border rounded-lg'>
 
@@ -165,7 +166,7 @@ export default function Classes() {
         onPress={() => {
           router.push({
             pathname: "/(teacher)/meeting",
-            params: { TeacherID, StudentID, StudentName },
+            params: { meet_link, Title, StudentName },
           });
         }}
       />

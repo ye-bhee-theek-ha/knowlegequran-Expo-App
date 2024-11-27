@@ -31,7 +31,7 @@ export default function TabOneScreen() {
     try {
 
       // await signIn(email, password);
-      await signIn("testteacher@kqc.com", "1");
+      await signIn("a@gmail.com", "123");
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';

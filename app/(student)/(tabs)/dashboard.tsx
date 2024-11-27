@@ -184,6 +184,10 @@ export default function Dashboard() {
     const statusColor = classes.status === "2" ? 'bg-green-200' : classes.status === "1" ? 'bg-yellow-200' : 'bg-red-200';
     const teacher = teachers.find((t: any) => t.teacher_code === classes.teacher_code);
 
+    const meet_link = classes.title + classes.teacher_code + classes.student_code;
+    const Title = classes.title
+    const StudentName = user.name;
+
     return(
     <View className='my-2 border-primary bg-primary-20 py-3 px-4 border rounded-lg'>
 
@@ -210,7 +214,10 @@ export default function Dashboard() {
           class_Name='mt-3 bg-primary mx-4'
           textClassName='font-bold text-text'
           onPress={() => {
-
+            router.push({
+              pathname: "/(student)/meeting",
+              params: { meet_link, Title, StudentName },
+            });
           }}
         />
 

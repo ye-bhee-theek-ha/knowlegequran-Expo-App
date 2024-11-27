@@ -56,11 +56,9 @@ const MeetingScreen = () => {
         onConferenceJoined: () => console.log("Student joined the meeting"),
         onConferenceLeft: () => {
           router.back();
-          console.warn("left");
         },
         onReadyToClose: () => {
           router.back();
-          console.warn("left");
         },
         onVideoMutedChanged: (e: any) => console.log("Video state changed", e),
         onAudioMutedChanged: (e: any) => console.log("Audio state changed", e),
@@ -69,7 +67,7 @@ const MeetingScreen = () => {
       userInfo={{
         displayName: studentName,
         avatarURL: "",
-        email: "spam.alee.abd@gmail.com"
+        email: ""
       }}
 
       style={{
