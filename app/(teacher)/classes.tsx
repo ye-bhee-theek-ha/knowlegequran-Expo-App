@@ -165,7 +165,7 @@ export default function Classes() {
         textClassName='font-bold text-text'
         onPress={() => {
           router.push({
-            pathname: "/(teacher)/meeting",
+            pathname: "./firebase_login",
             params: { meet_link, Title, StudentName },
           });
         }}

@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+
 
 // Optionally import the services that you want to use
 // import {...} from "firebase/auth";
@@ -23,4 +25,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-export { app, db };
+const auth = getAuth(app);
+
+export { app, db, auth };

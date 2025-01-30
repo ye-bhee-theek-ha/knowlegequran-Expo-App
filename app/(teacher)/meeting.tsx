@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { JitsiMeeting } from '@jitsi/react-native-sdk';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -14,7 +14,7 @@ const MeetingScreen = () => {
   return (
     <JitsiMeeting
       room={link}
-      serverURL="https://meet.jit.si"
+      serverURL={`https://meet.jit.si/ + ${meet_link}`}
       config={{
         hideConferenceTimer: true,
         subject: title,
@@ -69,7 +69,7 @@ const MeetingScreen = () => {
       userInfo={{
         displayName: studentName,
         avatarURL: "",
-        email: "spam.alee.abd@gmail.com"
+        email: ""
       }}
 
       style={{

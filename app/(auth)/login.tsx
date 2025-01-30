@@ -14,29 +14,29 @@ export default function TabOneScreen() {
   const [error, setError] = useState('');
 
   const handleSignIn = async () => {
-    // if (email.trim() === '') {
-    //   setError('Email is required');
-    //   return;
-    // }
-    // else if (password.trim() === '') {
-    //   setError('Password is required');
-    //   return;
-    // }
-    // else
-    // {
-    //   setError('');
-    // }
+    if (email.trim() === '') {
+      setError('Email is required');
+      return;
+    }
+    else if (password.trim() === '') {
+      setError('Password is required');
+      return;
+    }
+    else
+    {
+      setError('');
+    }
 
-    // setLoading(true);
+    setLoading(true);
     try {
 
-      // await signIn(email, password);
-      await signIn("a@gmail.com", "123");
+      await signIn(email, password);
+      // await signIn("a@gmail.com", "123");
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
       setError(errorMessage);
-      // setEmail("");
+      setEmail("");
       setPassword("")
     } finally {
       setLoading(false);
