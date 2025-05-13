@@ -7,7 +7,10 @@
     "icon": "./assets/images/app_icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -17,28 +20,30 @@
       "bundleIdentifier": "com.anonymous.knowlegequranapp",
       "buildNumber": "1",
       "icon": "./assets/images/app_icon_ios.png",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.knowlegequranapp",
       "permissions": [
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.BLUETOOTH",
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.MANAGE_OWN_CALLS",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.RECORD_AUDIO",
-        "FOREGROUND_SERVICE",
-        "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-        "FOREGROUND_SERVICE_MEDIA_PROJECTION",
-        "ACCESS_NETWORK_STATE",
-        "BLUETOOTH",
-        "CAMERA",
-        "INTERNET",
-        "MANAGE_OWN_CALLS",
-        "MODIFY_AUDIO_SETTINGS",
-        "RECORD_AUDIO",
-        "WAKE_LOCK",
-        "ACCESS_WIFI_STATE"
+        "android.permission.WAKE_LOCK",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -49,11 +54,7 @@
     "plugins": [
       "expo-router",
       [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose.",
-          "cameraPermission": "The app accesses your camera to allow you to set a profile picture. This makes it easier for them to identify you. It is only ever used for this single purpose."
-        }
+        "expo-image-picker"
       ],
       [
         "expo-build-properties",

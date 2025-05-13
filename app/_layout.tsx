@@ -5,7 +5,7 @@ import { Slot, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider } from '@/context/auth';
 import { AppProvider } from '@/context/app';
@@ -57,9 +57,11 @@ function RootLayoutNav() {
   return (
     <AuthProvider>
       <AppProvider>
+      {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
         <ThemeProvider value={DefaultTheme}>
           <Slot/>
         </ThemeProvider>
+      {/* </GestureHandlerRootView> */}
       </AppProvider>
     </AuthProvider>
   );

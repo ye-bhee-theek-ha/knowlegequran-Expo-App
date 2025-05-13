@@ -221,14 +221,14 @@ export default function TabOneScreen() {
               <Image
                 className='w-20 h-20 rounded-full'
                 source={{ uri: image.uri }}
-                resizeMode="cover"  // You can use "contain" or "stretch" as well
+                resizeMode="cover" 
               />
               :
               img &&
               <Image
                 className='w-20 h-20 rounded-full'
                 source={{ uri: img }}
-                resizeMode="cover"  // You can use "contain" or "stretch" as well
+                resizeMode="cover" 
               />
             }
           </View>

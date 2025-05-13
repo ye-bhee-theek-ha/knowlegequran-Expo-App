@@ -18,13 +18,14 @@
     "@giphy/react-native-sdk": "2.3.0",
     "@jitsi/react-native-sdk": "^10.2.1",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-native-clipboard/clipboard": "1.14.2",  
+    "@react-native-clipboard/clipboard": "1.14.2",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/netinfo": "11.3.1",
     "@react-native-community/slider": "4.5.2",
+    "@react-native-picker/picker": "2.7.5",
     "@react-navigation/native": "^6.1.8",
     "axios": "0.18.0",
-    "expo": "^51.0.32",
+    "expo": "^52.0.41",
     "expo-build-properties": "~0.12.5",
     "expo-clipboard": "~6.0.3",
     "expo-dev-client": "~4.0.26",
@@ -63,8 +64,7 @@
     "react-native-watch-connectivity": "1.1.0",
     "react-native-web": "~0.19.6",
     "react-native-webrtc": "124.0.4",
-    "react-native-webview": "13.8.6",
-    "@react-native-picker/picker": "2.7.5"
+    "react-native-webview": "13.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

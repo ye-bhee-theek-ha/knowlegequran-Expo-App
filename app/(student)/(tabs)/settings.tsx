@@ -14,6 +14,7 @@ export default function TabOneScreen() {
   const {signOut, user} = useAuth();
   const router = useRouter()
 
+
   const notificationBannerRef = useRef<NotificationBannerRef>(null);
   const showBanner = (message:string, type: "success" | "error") => { 
     notificationBannerRef.current?.handleShowBanner(message, type);

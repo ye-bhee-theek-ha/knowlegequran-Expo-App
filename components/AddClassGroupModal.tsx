@@ -10,7 +10,6 @@ import {
   Image,
   Linking,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import AppButton from "@/components/Button";
 import { Picker } from "@react-native-picker/picker";
 import { useApp } from "@/context/app";
